@@ -7,7 +7,7 @@ import entities from './entities/entities';
 
 import { initializeTransactionalContext, patchTypeORMRepositoryWithBaseRepository } from 'typeorm-transactional-cls-hooked';
 import { SeederOptions } from 'typeorm-extension';
-import PermissionSeeder from './seeding/permissions.seeding';
+// import PermissionSeeder from './seeding/permissions.seeding';
 import AuthHierarchiesCoursesSeeder from './seeding/auth_heirarchy_courses.seeding';
 import AuthHierarchiesEmsSeeder from './seeding/auth_heirarachy_ems.seeding';
 import AuthHierarchiesSchoolGradesSeeder from './seeding/auth_heirarchy_school_grades.seeding';
@@ -25,7 +25,7 @@ initializeTransactionalContext()
 patchTypeORMRepositoryWithBaseRepository()
 
 const conf: DataSourceOptions & SeederOptions = {
-  type: 'postgres' as any,
+  type: 'mysql' as any,
   database: process.env.TYPEORM_DATABASE,
   port: parseInt(process.env.TYPEORM_PORT) || 5432,
   username: process.env.TYPEORM_USERNAME,
@@ -47,7 +47,7 @@ const conf: DataSourceOptions & SeederOptions = {
   //   migrationsDir: 'src/database/migrations',
   // },
   seeds: [
-    PermissionSeeder,
+    // PermissionSeeder,
     // AuthHierarchiesCoursesSeeder,
     // AuthHierarchiesEmsSeeder,
     // AuthHierarchiesSchoolGradesSeeder,

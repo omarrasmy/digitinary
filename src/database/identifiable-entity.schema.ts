@@ -7,7 +7,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { AutoMap } from '@automapper/classes';
-import { joinType } from 'src/helper/enums/join.enum';
 
 export abstract class IdentifiableEntitySchema extends BaseEntity {
   @PrimaryGeneratedColumn()
