@@ -6,7 +6,7 @@ import {
 
 export function initSwagger(app) {
   const config = new DocumentBuilder()
-    .setTitle('EMS')
+    .setTitle('digitinary')
     .setDescription("An API Documentation for NIS EMS(Education Management System) That Describe our API's")
     .setVersion('1.0')
     .addBearerAuth()
@@ -18,5 +18,5 @@ export function initSwagger(app) {
     },
   };
 
-  SwaggerModule.setup('EMS-swagger-docs', app, document, customOptions);
+  SwaggerModule.setup('digitinary-swagger-docs', app, document, customOptions);
 }

@@ -1,6 +1,8 @@
 import { AutoMap } from "@automapper/classes";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsStrongPassword } from "class-validator";
+import { PropertyExists } from "src/helper/decorator/unique-validation";
+import { EntitiesEnum } from "src/helper/enums/entities.enum";
 
 export class CreateUserDto {
     @AutoMap()
@@ -10,6 +12,7 @@ export class CreateUserDto {
         uniqueItems: true,
     })
     @IsEmail()
+    @PropertyExists(EntitiesEnum.USERS, ['email'])
     @IsNotEmpty()
     email: string;
     @AutoMap()

@@ -8,12 +8,12 @@ import entities from './entities/entities';
 import { initializeTransactionalContext, patchTypeORMRepositoryWithBaseRepository } from 'typeorm-transactional-cls-hooked';
 import { SeederOptions } from 'typeorm-extension';
 // import PermissionSeeder from './seeding/permissions.seeding';
-import AuthHierarchiesCoursesSeeder from './seeding/auth_heirarchy_courses.seeding';
-import AuthHierarchiesEmsSeeder from './seeding/auth_heirarachy_ems.seeding';
-import AuthHierarchiesSchoolGradesSeeder from './seeding/auth_heirarchy_school_grades.seeding';
-import AuthHierarchiesSchoolSeeder from './seeding/auth_heirarchy_schools.seeding';
-import AuthHeirarchiesOrganizationSeeder from './seeding/auth_heirarchy_organization.seeding';
-import RolesSeeder from './seeding/roles.seeding';
+// import AuthHierarchiesCoursesSeeder from './seeding/auth_heirarchy_courses.seeding';
+// import AuthHierarchiesEmsSeeder from './seeding/auth_heirarachy_ems.seeding';
+// import AuthHierarchiesSchoolGradesSeeder from './seeding/auth_heirarchy_school_grades.seeding';
+// import AuthHierarchiesSchoolSeeder from './seeding/auth_heirarchy_schools.seeding';
+// import AuthHeirarchiesOrganizationSeeder from './seeding/auth_heirarchy_organization.seeding';
+// import RolesSeeder from './seeding/roles.seeding';
 
 const env = process.env.NODE_ENV || 'development';
 const dotenv_path = path.resolve(process.cwd(), `.${env}.env`);

@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { EntityNotFoundError, QueryFailedError } from 'typeorm';
 import { Response, Request } from 'express'; // Add this import if not already present
-import { PostgresErrorCode } from './postgresErrorCodes.enum';
+import { PostgresErrorCode, MysqlErrorCode } from './postgresErrorCodes.enum';
 
 @Catch(
   QueryFailedError,
@@ -36,18 +36,21 @@ export class QueryFailedExceptionFilter implements ExceptionFilter {
     };
     switch (code) {
       case PostgresErrorCode.UniqueViolation:
-        let detail = exception['detail'];
-        if (detail)
+      case MysqlErrorCode.DuplicateEntry:
+        let detail = exception['detail'] ?? exception['driverError']?.message;
+        if (detail) {
           errorResponse['message'] = [
             detail
               .split('=')[0]
               .split(' ')[1]
               .replace(/[()""]/g, '') + ' already exists',
           ];
+        }
         errorResponse['statusCode'] = HttpStatus.BAD_REQUEST;
         break;
 
       case PostgresErrorCode.ForeignKeyViolation:
+      case MysqlErrorCode.RowIsReferenced:
         const message = exception['driverError'].message.split('\n')[0];
 
         const regex =
@@ -68,6 +71,7 @@ export class QueryFailedExceptionFilter implements ExceptionFilter {
         break;
 
       case PostgresErrorCode.InvalidForeignKey:
+      case MysqlErrorCode.NoReferencedRow:
         errorResponse['message'] = ['key send are not found'];
         errorResponse['statusCode'] = HttpStatus.BAD_REQUEST;
         break;
@@ -82,6 +86,7 @@ export class QueryFailedExceptionFilter implements ExceptionFilter {
         errorResponse['statusCode'] = code;
         break;
       case PostgresErrorCode.NotNullViolation:
+      case MysqlErrorCode.BadNullError:
         errorResponse['message'] = [exception['column'] + ' is required'];
         errorResponse['statusCode'] = HttpStatus.BAD_REQUEST;
         break;

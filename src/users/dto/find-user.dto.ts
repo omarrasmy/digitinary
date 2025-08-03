@@ -27,5 +27,9 @@ export class UserResponseDto {
         example: '2023-10-01T12:00:00Z'
     })
     createdAt: Date;
+}
 
+export class InternalUserDto extends UserResponseDto {
+    @AutoMap()
+    password: string;
 }

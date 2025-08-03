@@ -22,7 +22,7 @@ export interface IEntityRepository<TSchema extends IdentifiableEntitySchema, TEn
   update(
     id: number,
     entity: DeepPartial<TSchema>,
-  ): Promise<UpdateResult | TEntity>;
+  ): Promise<TEntity>;
 
   delete(id: number): Promise<DeleteResult>;
   softDelete(findOption: FindOneOptions<TSchema>): Promise<TSchema>;

@@ -1,4 +1,4 @@
-import { NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import {
   Brackets,
   DeepPartial,
@@ -48,7 +48,7 @@ export abstract class EntityRepository<
   async findOne(options: FindOneOptions<TSchema>): Promise<TEntity> {
     const entity = await this.entityRepository.findOne(options);
     if (!entity) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('Entity not found');
     }
     return this.entitySchemaFactory.createFromSchema(entity);
   }
@@ -61,7 +61,7 @@ export abstract class EntityRepository<
   async update(
     id: number,
     entity: object,
-  ): Promise<UpdateResult | TEntity> {
+  ): Promise<TEntity> {
     let updatedEntity = this.entitySchemaFactory.create(entity);
     const updateResult = await this.entityRepository.update(id, updatedEntity as QueryDeepPartialEntity<TSchema>);
     if (updateResult.affected === 0) {

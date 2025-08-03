@@ -1,6 +1,7 @@
 import { AutoMap } from "@automapper/classes";
 import { IdentifiableEntitySchema } from "src/database/identifiable-entity.schema";
-import { Column, Entity } from "typeorm";
+import { AfterLoad, BeforeInsert, BeforeUpdate, Column, Entity } from "typeorm";
+import * as bcrypt from 'bcrypt';
 
 @Entity()
 export class Users extends IdentifiableEntitySchema {
@@ -13,6 +14,30 @@ export class Users extends IdentifiableEntitySchema {
     @AutoMap()
     @Column()
     password: string;
+    @AutoMap()
+    @Column()
+    salt: string;
 
-
+    @BeforeInsert()
+    async hashPassword() {
+        if (this.password) {
+            const saltRounds = process.env.SALT;
+            this.salt = bcrypt.genSaltSync(Number(saltRounds));
+            this.password = bcrypt.hashSync(this.password, this.salt);
+        }
+    }
+    private tempPassword: string;
+    @AfterLoad()
+    private loadTempPassword(): void {
+        this.tempPassword = this.password;
+    }
+    @BeforeUpdate()
+    async handleUpdate() {
+        if (this.password && this.tempPassword !== this.password) {
+            const saltRounds = process.env.SALT;
+            this.salt = bcrypt.genSaltSync(Number(saltRounds));
+            this.password = bcrypt.hashSync(this.password, this.salt);
+        }
+    }
 }
+
