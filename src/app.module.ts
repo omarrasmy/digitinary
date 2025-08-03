@@ -10,6 +10,8 @@ import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './auth/guard/jwt-auth.guard';
 import { QueryFailedExceptionFilter } from './database/exception.filter';
 import { AccessTokenStrategy } from './auth/strategies/accessToken.strategy';
+import { MoviesModule } from './movies/movies.module';
+import { GenresModule } from './genres/genres.module';
 @Module({
   imports: [
     UsersModule,
@@ -18,6 +20,8 @@ import { AccessTokenStrategy } from './auth/strategies/accessToken.strategy';
     AutomapperModule.forRoot({
       strategyInitializer: classes(),
     }),
+    MoviesModule,
+    GenresModule,
   ],
   controllers: [AppController],
   providers: [AppService,

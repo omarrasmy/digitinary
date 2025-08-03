@@ -25,6 +25,8 @@ export async function requests(
             throw new BadRequestException(message);
         return response.data;
     } catch (e) {
+        console.log(e);
+
         throw new BadRequestException(message);
     }
 }
