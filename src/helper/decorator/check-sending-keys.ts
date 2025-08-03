@@ -1,8 +1,8 @@
 import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments, registerDecorator, ValidationOptions, isUUID } from 'class-validator';
 import { UUID } from 'crypto';
 import entities from 'src/database/entities/entities';
-import { EntitiesEnum } from 'src/roles/subdomain/permissions/enum/entities.enum';
 import { In, Repository } from 'typeorm';
+import { EntitiesEnum } from '../enums/entities.enum';
 @ValidatorConstraint({ name: 'idExists', async: true })
 class IdExistsConstraint implements ValidatorConstraintInterface {
   async validate(id: UUID, args: ValidationArguments) {

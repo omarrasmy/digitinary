@@ -7,8 +7,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import entities from 'src/database/entities/entities';
-import { EntitiesEnum } from 'src/roles/subdomain/permissions/enum/entities.enum';
 import { Repository } from 'typeorm';
+import { EntitiesEnum } from '../enums/entities.enum';
 type ParamsToCheck = string[];
 
 export const ParamCheck = createParamDecorator(
