@@ -1,11 +1,12 @@
 import { GenericFindAllDomainResponse } from "src/helper/dto/generic-domain-find-all-response.dto";
 import { MovieInterfaceSchemaFactory } from "../interface/movie.interface.schema.factory";
 import { Mapper } from "@automapper/core";
-import { DeepPartial } from "typeorm";
+import { DeepPartial, FindOneOptions } from "typeorm";
 import { Injectable } from "@nestjs/common";
 import { InjectMapper } from "@automapper/nestjs";
 import { Movies } from "./movie.entity";
-import { MovieResponseDto } from "../dto/find-movie.dto";
+import { MovieResponseDto, MoviesQueryParams } from "../dto/find-movie.dto";
+import { CreateMovieDto } from "../dto/create-movie.dto";
 
 @Injectable()
 export class MovieSchemaFactory implements MovieInterfaceSchemaFactory {
@@ -15,7 +16,7 @@ export class MovieSchemaFactory implements MovieInterfaceSchemaFactory {
         return new GenericFindAllDomainResponse<MovieResponseDto>(
             entities,
             page,
-            Math.ceil(count / take),
+            count > (page * take) ? page + 1 : null,
             count,
             dataLength
         );
@@ -24,8 +25,7 @@ export class MovieSchemaFactory implements MovieInterfaceSchemaFactory {
         return this.mapper.map(entitySchema, Movies, MovieResponseDto);
     }
 
-    create(data: any): DeepPartial<Movies> {
-        return;
-        // return this.mapper.map(data, CreateMovieDto, Movies);
+    create(data: CreateMovieDto): DeepPartial<Movies> {
+        return this.mapper.map(data, CreateMovieDto, Movies);
     }
 }

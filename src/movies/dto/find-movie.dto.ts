@@ -1,5 +1,12 @@
 import { AutoMap } from "@automapper/classes";
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiExtraModels, ApiProperty } from "@nestjs/swagger";
+import { IsArray, IsBoolean, IsDate, IsEnum, IsIn, IsInt, IsNotEmpty, IsOptional, Max, Min } from "class-validator";
+import { SupportedLanguage } from "../enums/languages.enum";
+import { Transform, Type } from "class-transformer";
+import { GenericFindAllDomainResponse } from "src/helper/dto/generic-domain-find-all-response.dto";
+import { GenreResponseDto } from "src/genres/dto/find-genre.dto";
+import { autoMap } from "@automapper/core";
+import { Genres } from "src/genres/db/genres.entity";
 
 export class MovieResponseDto {
     @AutoMap()
@@ -87,4 +94,125 @@ export class MovieResponseDto {
     })
     overview: string;
 
+    @AutoMap(() => [Genres])
+    @ApiProperty({
+        description: 'The genres associated with the movie',
+        type: () => [GenreResponseDto],
+    })
+    genres: GenreResponseDto[];
+
+}
+
+export class MoviesQueryParams {
+    @ApiProperty({
+        description: 'The page number for pagination (default is 1)',
+        example: 1,
+        required: false,
+    })
+    @IsInt()
+    @Min(1)
+    @IsOptional()
+    page?: number;
+    @ApiProperty({
+        description: 'The number of items per page for pagination default is 20',
+        example: 10,
+        required: false,
+    })
+    @IsInt()
+    @Min(1)
+    @IsOptional()
+    limit?: number;
+    @ApiProperty({
+        description: 'The genre ID to filter movies by genre',
+        required: false,
+        type: () => [Number],
+    })
+    @Type(() => Number)
+    @IsArray()
+    @Transform(({ value }) => Array.isArray(value) ? value : [value])
+    @IsOptional()
+    genreId?: number[];
+    @ApiProperty({
+        description: 'The sort order for the movies (e.g., "popularity.desc", "release_date.asc")',
+        example: 'popularity.desc',
+        required: false,
+    })
+    @IsEnum(['popularity.asc', 'popularity.desc', 'release_date.asc', 'release_date.desc'])
+    @IsOptional()
+    sort?: string;
+    @ApiProperty({
+        description: 'The search query to filter movies by title or description',
+        example: 'Inception',
+        required: false,
+    })
+    @IsOptional()
+    @IsNotEmpty({ message: 'Search query must not be empty' })
+    search?: string;
+    @ApiProperty({
+        description: 'The minimum rating to filter movies by vote average',
+        example: 7.0,
+        required: false,
+    })
+    @IsOptional()
+    @Min(0, { message: 'Minimum rating must be at least 0' })
+    @Max(10, { message: 'Maximum rating must be at most 10' })
+    minRating?: number;
+    @ApiProperty({
+        description: 'The maximum rating to filter movies by vote average',
+        example: 10.0,
+        required: false,
+    })
+    @IsOptional()
+    @Min(0, { message: 'Maximum rating must be at least 0' })
+    @IsInt()
+    @Max(10, { message: 'Maximum rating must be at most 10' })
+    maxRating?: number;
+    @ApiProperty({
+        description: 'The language to filter movies by original language',
+        example: 'en',
+        required: false,
+    })
+    @IsOptional()
+    @IsEnum(SupportedLanguage)
+    language?: string;
+    @ApiProperty({
+        description: 'The release date to filter movies by release date',
+        example: '2010-07-16',
+        required: false,
+    })
+    @IsOptional()
+    @IsNotEmpty({ message: 'Release date must not be empty' })
+    @IsDate({ message: 'Release date must be a valid date' })
+    startReleaseDate?: Date;
+    @ApiProperty({
+        description: 'The end release date to filter movies by release date',
+        example: '2010-07-16',
+        required: false,
+    })
+    @IsOptional()
+    @IsNotEmpty({ message: 'End release date must not be empty' })
+    @IsDate({ message: 'End release date must be a valid date' })
+    endReleaseDate?: Date;
+    @ApiProperty({
+        description: 'The adult content filter (true for adult content, false for non-adult content)',
+        required: false
+    })
+    @IsOptional()
+    @IsBoolean()
+    @Transform(({ obj, }) => {
+        if (obj?.adult == 'false' || obj?.adult == '0')
+            return false;
+
+        else if (obj?.adult == 'true' || obj?.adult == '1')
+            return true;
+    })
+    adult?: boolean;
+}
+
+@ApiExtraModels(MovieResponseDto)
+export class FindAllResponseForSwagger extends GenericFindAllDomainResponse<MovieResponseDto> {
+    @ApiProperty({
+        type: [MovieResponseDto],
+    })
+    data: MovieResponseDto[];
 }

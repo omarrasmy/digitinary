@@ -5,9 +5,8 @@ export class GenericFindAllDomainResponse<TEntity> {
   @AutoMap()
   @ApiProperty({
     description: 'Array of entities',
-    type: () => Array<TEntity>
   })
-  data: Array<TEntity>;
+  data: TEntity[];
   @AutoMap()
   @ApiProperty({
     description: 'Current page number',

@@ -1,9 +1,9 @@
-import { FindOneOptions, In, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, ILike, In, Repository } from "typeorm";
 import { EntityRepository } from "src/database/entity.repository";
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Genres } from "./genres.entity";
-import { GenreResponseDto } from "../dto/find-genre.dto";
+import { GenreQueryParamsDto, GenreResponseDto } from "../dto/find-genre.dto";
 import { GenreInterfaceRepository } from "../interface/genre.interface.repository";
 import { GENRE_INTERFACE_SCHEMA_FACTORY } from "../interface/genres.tokens";
 import { GenreInterfaceSchemaFactory } from "../interface/genre.interface.schema.factory";
@@ -17,5 +17,17 @@ export class GenresRepository extends EntityRepository<Genres, GenreResponseDto>
         protected readonly entitySchemaFactory: GenreInterfaceSchemaFactory,
     ) {
         super(repository, entitySchemaFactory);
+    }
+    createFromQueryParamToFindOptions(queryParam: GenreQueryParamsDto): FindOneOptions<Genres> {
+        let where: FindOptionsWhere<Genres> = {};
+        if (queryParam.name)
+            where.name = ILike(`%${queryParam.name}%`);
+        const findOptions: FindOneOptions<Genres> = {
+            where: where,
+            order: {
+                createdAt: "DESC"
+            },
+        }
+        return findOptions;
     }
 }

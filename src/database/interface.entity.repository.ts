@@ -4,6 +4,7 @@ import {
   Brackets,
   DeepPartial,
   DeleteResult,
+  FindManyOptions,
   FindOneOptions,
   Repository,
   SelectQueryBuilder,
@@ -12,9 +13,9 @@ import {
 import { IdentifiableEntitySchema } from './identifiable-entity.schema';
 export interface IEntityRepository<TSchema extends IdentifiableEntitySchema, TEntity> {
   findAll(
-    options: FindOneOptions<TSchema>,
+    options: FindManyOptions<TSchema>,
     take?: number,
-    skip?: number,
+    page?: number,
   ): Promise<GenericFindAllDomainResponse<TEntity>>;
 
   findOne(options: FindOneOptions<TSchema>): Promise<TEntity>;
