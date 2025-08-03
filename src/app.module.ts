@@ -12,11 +12,13 @@ import { QueryFailedExceptionFilter } from './database/exception.filter';
 import { AccessTokenStrategy } from './auth/strategies/accessToken.strategy';
 import { MoviesModule } from './movies/movies.module';
 import { GenresModule } from './genres/genres.module';
+import { RedisConfigModule } from './common/redis/redis.module';
 @Module({
   imports: [
     UsersModule,
     AuthModule,
     DatabaseModule,
+    RedisConfigModule,
     AutomapperModule.forRoot({
       strategyInitializer: classes(),
     }),

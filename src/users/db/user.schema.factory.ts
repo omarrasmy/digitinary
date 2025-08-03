@@ -20,7 +20,7 @@ export class UserSchemaFactory implements UserInterfaceSchemaFactory {
         return new GenericFindAllDomainResponse<UserResponseDto>(
             entities,
             page,
-            Math.ceil(count / take),
+            count > (page * take) ? page + 1 : null,
             count,
             dataLength
         );

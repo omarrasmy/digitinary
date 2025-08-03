@@ -7,11 +7,11 @@ import { Seeder, SeederFactoryManager } from "typeorm-extension";
 export default class MoviesSeeder implements Seeder {
     public async run(dataSource: DataSource, factoryManager: SeederFactoryManager): Promise<void> {
         const moviesRepository = dataSource.getRepository(Movies);
+        //make it scheduled but it's only limited to 500 movies
+        //and it will not update the existing movies
         console.log('Running Movie Seeder...');
-
         for (let i = 1; i <= 500; i++) {
             console.log(`Fetching movies from page ${i}...`);
-
             try {
                 const result = await requests(
                     `${process.env.MOVIES_API}?page=${i}`,
