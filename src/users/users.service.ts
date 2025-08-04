@@ -7,8 +7,8 @@ import { Users } from './db/user.entity';
 import { InternalUserDto, UserResponseDto } from './dto/find-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { USER_INTERFACE_REPOSITORY, USER_INTERFACE_SCHEMA_FACTORY } from './interface/users.tokens';
-import { RedisService } from 'src/common/redis/redis.service';
 import { RedisKey } from 'src/common/redis/enums/redis-key.enums';
+import { RedisService } from 'src/common/redis/redis.service';
 
 @Injectable()
 export class UsersService {

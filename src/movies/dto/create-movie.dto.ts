@@ -52,9 +52,9 @@ export class CreateMovieRateDto {
     comment: string;
     @AutoMap()
     @IsOptional()
-    usersId: number;
+    usersId?: number;
 
     @AutoMap()
     @IsOptional()
-    moviesId: number;
+    moviesId?: number;
 }

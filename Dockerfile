@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 8080
 
 # ✅ Use your current script
-CMD ./wait-for-it.sh mysql 3306 -- sh -c  "npm run typeorm:run && npm run seed && npm run start:dev"
+CMD ./wait-for-it.sh mysql 3306 -- sh -c  "npm run typeorm:run && npm run seed && npm test && npm run start:dev"

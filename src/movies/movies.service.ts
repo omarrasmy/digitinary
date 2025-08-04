@@ -15,8 +15,6 @@ export class MoviesService {
   constructor(
     @Inject(MOVIE_INTERFACE_REPOSITORY)
     private readonly moviesRepository: MovieInterfaceRepository,
-    @Inject(MOVIE_INTERFACE_SCHEMA_FACTORY)
-    private readonly movieSchemaFactory: MovieInterfaceSchemaFactory,
     private readonly redisService: RedisService,
     @Inject(MOVIE_RATES_INTERFACE_REPOSITORY)
     private readonly movieRatesRepository: MovieRatesInterfaceRepository,

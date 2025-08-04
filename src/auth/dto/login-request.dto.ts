@@ -15,6 +15,7 @@ export class LoginRequest {
   @IsEmail()
   @AutoMap()
   @ApiProperty({ type: String, example: 'omarrasmy@gmail.com' })
+  @IsNotEmpty()
   email: string;
   @AutoMap()
   @IsStrongPassword({
@@ -25,5 +26,6 @@ export class LoginRequest {
     minSymbols: 1,
   })
   @ApiProperty({ type: String, example: 'Omar@1234' })
+  @IsNotEmpty()
   password: string;
 }

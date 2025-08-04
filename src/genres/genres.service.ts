@@ -10,9 +10,7 @@ import { GenreSchemaFactory } from './db/genre.schema.factory';
 export class GenresService {
   constructor(
     @Inject(GENRE_INTERFACE_REPOSITORY)
-    private readonly genresRepository: GenresRepository,
-    @Inject(GENRE_INTERFACE_SCHEMA_FACTORY) // Assuming you have a schema factory
-    private readonly genreSchemaFactory: GenreSchemaFactory
+    private readonly genresRepository: GenresRepository
   ) { }
   findAll(Query: GenreQueryParamsDto) {
     return this.genresRepository.findAll(
