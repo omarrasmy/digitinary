@@ -1,7 +1,8 @@
 import { AutoMap } from "@automapper/classes";
 import { IdentifiableEntitySchema } from "src/database/identifiable-entity.schema";
-import { AfterLoad, BeforeInsert, BeforeUpdate, Column, Entity } from "typeorm";
+import { AfterLoad, BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from "typeorm";
 import * as bcrypt from 'bcrypt';
+import { MovieRates } from "src/movies/db/movie-rate.entity";
 
 @Entity()
 export class Users extends IdentifiableEntitySchema {
@@ -17,6 +18,9 @@ export class Users extends IdentifiableEntitySchema {
     @AutoMap()
     @Column()
     salt: string;
+    @AutoMap()
+    @OneToMany(() => MovieRates, (movieRate) => movieRate.users)
+    MovieRates: MovieRates[];
 
     @BeforeInsert()
     async hashPassword() {

@@ -26,7 +26,8 @@ export const ParamCheck = createParamDecorator(
     }
     for (let i = 0; i < tableName.length; i++) {
       const repository = entities[tableName[i]] as Repository<any>;
-      const paramValue = request.params[parseInt(paramsToCheck[i])];
+      const paramValue = parseInt(request.params[paramsToCheck[i]]);
+
       const entity = await repository.findOne({ where: { id: paramValue } });
       if (!entity) {
         throw new NotFoundException(`Entity Not Found`);

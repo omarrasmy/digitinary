@@ -70,7 +70,6 @@ export class MoviesRepository extends EntityRepository<Movies, MovieResponseDto>
             where: whereOR,
             order
         };
-
         return options;
     }
 }

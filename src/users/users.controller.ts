@@ -71,7 +71,6 @@ export class UsersController {
     isPublic: false,
   })
   @ApiParam({ name: 'id', type: Number, description: 'User ID' })
-
   update(@ParamCheck({ tableName: [EntitiesEnum.USERS], paramsToCheck: ['id'] }) param: { id: number }, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(param.id, updateUserDto);
   }

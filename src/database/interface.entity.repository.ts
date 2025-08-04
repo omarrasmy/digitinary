@@ -13,7 +13,7 @@ import {
 import { IdentifiableEntitySchema } from './identifiable-entity.schema';
 export interface IEntityRepository<TSchema extends IdentifiableEntitySchema, TEntity> {
   findAll(
-    options: FindManyOptions<TSchema>,
+    options: FindOneOptions<TSchema>,
     take?: number,
     page?: number,
   ): Promise<GenericFindAllDomainResponse<TEntity>>;
