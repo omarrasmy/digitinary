@@ -34,7 +34,7 @@ export const ParamCheck = createParamDecorator(
       }
     }
     return paramsToCheck.reduce((params, paramName) => {
-      params[paramName] = request.params[paramName];
+      params[paramName] = isNaN(Number(request.params[paramName])) ? request.params[paramName] : parseInt(request.params[paramName]);
       return params;
     }, {});
   },

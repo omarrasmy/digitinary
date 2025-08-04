@@ -5,4 +5,6 @@ import { FindOneOptions } from "typeorm";
 
 export interface UserInterfaceRepository extends IEntityRepository<Users, UserResponseDto> {
     findOneInternal(options: FindOneOptions<Users>): Promise<InternalUserDto>;
+    addMovieToWishlist(id: number, movieId: number): Promise<UserResponseDto>;
+    deleteMovieToWishlist(id: number, movieId: number): Promise<UserResponseDto>;
 }

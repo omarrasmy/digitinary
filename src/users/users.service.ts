@@ -15,8 +15,6 @@ export class UsersService {
   constructor(
     @Inject(USER_INTERFACE_REPOSITORY)
     private readonly userInterfaceRepository: UserInterfaceRepository,
-    @Inject(USER_INTERFACE_SCHEMA_FACTORY)
-    private readonly userInterfaceSchemaFactory: UserInterfaceSchemaFactory,
     private readonly redisService: RedisService // Assuming you have a Redis service for caching
   ) { }
 
@@ -33,9 +31,9 @@ export class UsersService {
       return cachedUser;
     }
     // If not found in cache, fetch from database
-    const user = await this.userInterfaceRepository.findOne({ where: { id } });
+    const user = await this.userInterfaceRepository.findOne({ where: { id }, relations: { wishlist: true } });
     // Store the fetched user in Redis cache
-    await this.redisService.set(RedisKey.USER + user.id, user);
+    await this.redisService.set(RedisKey.USER + id, user);
     return user;
   }
   findOneInternal(options: FindOneOptions<Users>): Promise<InternalUserDto> {
@@ -45,8 +43,8 @@ export class UsersService {
     // Update the user in the database
 
     let user = await this.userInterfaceRepository.update(id, updateUserDto);
-    // Update the cache after updating the user
-    await this.redisService.set(RedisKey.USER + user.id, user);
+    // delete the cache after updating the user
+    await this.redisService.del(RedisKey.USER + id);
     return user;
   }
   async softDelete(id: number): Promise<Users> {
@@ -54,5 +52,17 @@ export class UsersService {
     await this.redisService.del(RedisKey.USER + id);
     return this.userInterfaceRepository.softDelete({ where: { id } });
   }
+  async addMovieToWishlist(id: number, movieId: number) {
+    let user = await this.userInterfaceRepository.addMovieToWishlist(id, movieId);
+    await this.redisService.del(RedisKey.USER + id);
+    return user;
+  }
+  async deleteMovieToWishlist(id: number, movieId: number) {
+    let user = await this.userInterfaceRepository.deleteMovieToWishlist(id, movieId);
+    // Update the cache after deleting the movie from wishlist
+    await this.redisService.del(RedisKey.USER + id);
+    return user;
+  }
+
 }
 

@@ -40,17 +40,20 @@ export class MoviesService {
   }
   async saveAvarageRate(id) {
     let rateResult = await this.movieRatesRepository.getAvarageRateByMovieId(id);
-    await this.update(id, { vote_count: rateResult.count, vote_average: rateResult.avarageRate ?? 0 });
+    return this.update(id, { vote_count: rateResult.count, vote_average: rateResult.avarageRate ?? 0.0 });
   }
-  async checkRateMovieAuthorize(id: number, userId: number) {
+  async checkRateMovieAuthorize(id: number, userId: number, movieId: number) {
     let rate = await this.movieRatesRepository.findOne({ where: { id } });
     if (rate.usersId !== userId) {
       throw new BadRequestException('You can only delete or update your own movie rates');
     }
+    if (rate.moviesId !== movieId) {
+      throw new BadRequestException('This rate does not belong to the specified movie');
+    }
   }
-  async updateRateMovie(rateId: number, updateMovieRateDto: UpdateMovieRateDto, userId: number) {
+  async updateRateMovie(rateId: number, updateMovieRateDto: UpdateMovieRateDto, userId: number, movieId: number) {
     // Check if the rate exists and belongs to the user
-    await this.checkRateMovieAuthorize(rateId, userId);
+    await this.checkRateMovieAuthorize(rateId, userId, movieId);
     let movieRate = await this.movieRatesRepository.update(rateId, updateMovieRateDto);
     // Update the average rate after updating the rate
     await this.saveAvarageRate(movieRate.moviesId);
@@ -58,7 +61,7 @@ export class MoviesService {
   }
   async removeRateMovie(rateId: number, movieId: number, userId: number) {
     // Check if the rate exists
-    await this.checkRateMovieAuthorize(rateId, userId);
+    await this.checkRateMovieAuthorize(rateId, userId, movieId);
     await this.movieRatesRepository.delete(rateId);
     await this.saveAvarageRate(movieId);
     return;
@@ -85,7 +88,7 @@ export class MoviesService {
   async update(id: number, updateMovieDto: UpdateMovieDto) {
     let movie = await this.moviesRepository.update(id, updateMovieDto);
     // Update the cache after updating the movie
-    await this.redisService.set(RedisKey.MOVIE + id, movie);
+    await this.redisService.del(RedisKey.MOVIE + id);
     return movie;
     // return `This action updates a #${id} movie`;
   }

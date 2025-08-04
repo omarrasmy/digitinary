@@ -4,6 +4,7 @@ import { AfterLoad, BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyT
 import * as bcrypt from 'bcrypt';
 import { Genres } from "src/genres/db/genres.entity";
 import { MovieRates } from "./movie-rate.entity";
+import { Users } from "src/users/db/user.entity";
 
 @Entity()
 export class Movies extends IdentifiableEntitySchema {
@@ -54,7 +55,9 @@ export class Movies extends IdentifiableEntitySchema {
     genres: Genres[];
     @AutoMap()
     @OneToMany(() => MovieRates, (movieRate) => movieRate.movies)
-    MovieRates: MovieRates[];
-
+    movie_rates: MovieRates[];
+    @AutoMap()
+    @ManyToMany(() => Users, (user) => user.wishlist, { onDelete: 'CASCADE' })
+    user_wishlist: Users[];
 }
 

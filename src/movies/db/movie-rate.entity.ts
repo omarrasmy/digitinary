@@ -5,32 +5,32 @@ import { Movies } from "./movie.entity";
 import { Users } from "src/users/db/user.entity";
 
 @Entity()
+@Check(`"rate" >= 1 AND "rate" <= 10`)
 export class MovieRates extends IdentifiableEntitySchema {
     @AutoMap()
     @Column({
         type: "numeric",
         nullable: false,
-        precision: 2,
+        precision: 3,
         scale: 1,
         transformer: {
             to: (value: number) => value,
             from: (value: string) => parseFloat(value),
         }
     })
-    @Check(`"rate" >= 1 AND "rate" <= 10`)
     rate: number;
     @AutoMap()
     @Column({ nullable: true })
     comment: string;
     @AutoMap()
-    @ManyToOne(() => Movies, (movie) => movie.MovieRates, {
+    @ManyToOne(() => Movies, (movie) => movie.movie_rates, {
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         nullable: false
     })
     movies: Movies;
     @AutoMap()
-    @ManyToOne(() => Users, (user) => user.MovieRates, {
+    @ManyToOne(() => Users, (user) => user.movie_rates, {
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         nullable: false

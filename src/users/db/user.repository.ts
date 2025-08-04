@@ -18,6 +18,20 @@ export class UsersRepository extends EntityRepository<Users, UserResponseDto> im
     ) {
         super(repository, entitySchemaFactory);
     }
+    deleteMovieToWishlist(id: number, movieId: number): Promise<UserResponseDto> {
+        return this.repository.createQueryBuilder()
+            .relation(Users, "wishlist")
+            .of(id)
+            .remove(movieId)
+            .then(() => this.findOne({ where: { id }, relations: ["wishlist"] }));
+    }
+    addMovieToWishlist(id: number, movieId: number): Promise<UserResponseDto> {
+        return this.repository.createQueryBuilder()
+            .relation(Users, "wishlist")
+            .of(id)
+            .add(movieId)
+            .then(() => this.findOne({ where: { id }, relations: ["wishlist"] }));
+    }
     async findOneInternal(options: FindOneOptions<Users>): Promise<InternalUserDto> {
         const entity = await this.repository.findOne(options);
         if (!entity) {

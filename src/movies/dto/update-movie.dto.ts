@@ -1,6 +1,6 @@
 import { AutoMap } from '@automapper/classes';
 import { ApiExtraModels, ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
+import { IsNumber, IsOptional, Max, Min } from 'class-validator';
 import { CreateMovieDto, CreateMovieRateDto } from './create-movie.dto';
 // import { CreateMovieDto } from './find-movie.dto';
 
@@ -16,6 +16,13 @@ export class UpdateMovieRateDto {
         required: false,
     })
     @IsOptional()
+    @IsNumber()
+    @Max(10, {
+        message: 'Rate must be less than or equal to 10',
+    })
+    @Min(1, {
+        message: 'Rate must be greater than or equal to 1',
+    })
     rate?: number;
 
     @AutoMap()

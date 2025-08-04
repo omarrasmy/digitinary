@@ -16,12 +16,14 @@ export abstract class IdentifiableEntitySchema extends BaseEntity {
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
+  @AutoMap()
   createdAt: Date;
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
+  @AutoMap()
   updatedAt: Date;
   @DeleteDateColumn()
   deletedAt: Date;

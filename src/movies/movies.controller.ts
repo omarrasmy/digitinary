@@ -101,7 +101,7 @@ export class MoviesController {
     @Body() updateMovieRateDto: UpdateMovieRateDto,
     @JwtPayload() jwtPayload: JwtPayloadInterface
   ) {
-    return this.moviesService.updateRateMovie(param.rateId, updateMovieRateDto, jwtPayload.id);
+    return this.moviesService.updateRateMovie(param.rateId, updateMovieRateDto, jwtPayload.id, param.id);
   }
   @Delete(':id/rate/:rateId')
   @ApiDocs({
