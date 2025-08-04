@@ -24,8 +24,6 @@ export class MoviesRepository extends EntityRepository<Movies, MovieResponseDto>
         let order = {};
         if (query.adult)
             where.adult = query.adult;
-
-
         if (query.search) {
             whereOR.push({ title: ILike(`%${query.search}%`) });
             whereOR.push({ overview: ILike(`%${query.search}%`) });
@@ -65,12 +63,10 @@ export class MoviesRepository extends EntityRepository<Movies, MovieResponseDto>
                 [query.sort.split('.')[0]]: query.sort.split('.')[1] === 'asc' ? 'ASC' : 'DESC'
             }
         }
-        whereOR.push(where);
         const options: FindManyOptions<Movies> = {
-            where: whereOR,
+            where: whereOR.map((orCondition) => ({ ...where, ...orCondition })),
             order
         };
-
         return options;
     }
 }

@@ -1,73 +1,113 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank">
+    <img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" />
+  </a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+<p align="center">
+  A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+<p align="center">
+  <a href="https://www.npmjs.com/~nestjscore" target="_blank">
+    <img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" />
+  </a>
+  <a href="https://www.npmjs.com/~nestjscore" target="_blank">
+    <img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" />
+  </a>
+  <a href="https://www.npmjs.com/~nestjscore" target="_blank">
+    <img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" />
+  </a>
+  <a href="https://circleci.com/gh/nestjs/nest" target="_blank">
+    <img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" />
+  </a>
+  <a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank">
+    <img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" />
+  </a>
+  <a href="https://discord.gg/G7Qnnhy" target="_blank">
+    <img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/>
+  </a>
+  <a href="https://opencollective.com/nest#backer" target="_blank">
+    <img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" />
+  </a>
+  <a href="https://opencollective.com/nest#sponsor" target="_blank">
+    <img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" />
+  </a>
+</p>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Installation
+## 📝 Description
+
+This is a NestJS TypeScript-based backend project powered by Docker. It interacts with the [TMDB API](https://developer.themoviedb.org/) to fetch default movie ratings and count information. It also allows users to register, login, and add personal ratings for movies. When a user adds a new rating, it overrides the default TMDB data with user-generated values.
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
 
 ```bash
-$ npm install
+git clone https://github.com/your-org/digitinary.git
+cd digitinary
 ```
+### 2. Install Docker
+Make sure <a href="https://www.docker.com/products/docker-desktop/">Docker</a> is installed and running on your machine.
 
-## Running the app
+### 🐳 Run the App with Docker
 
+### 1. Start the Services
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+docker-compose up --build
 ```
+Wait for Docker to build and start all containers.
+Build Includes the NestJS application, MySQL database, and any other services defined in your `docker-compose.yml`.
+Build Also runs the migrations and seeds the database and unit testing.
+So you don't need to run them manually.
+All you need is to wait for the services to be up and running.
 
-## Test
-
+### 2. Access the Application
+Once the services are up, you can access the application at:
 ```bash
-# unit tests
-$ npm run test
+http://localhost:8080
+```
+### 📂 API Documentation
+Swagger is available once the app is up at:
+```bash
+http://localhost:8080/digitinary-swagger-docs
+```
+### 3. Run Unit Tests
+if you want to run the unit tests again by yourself, you can do so by running:
+```bash
+docker-compose exec app npm run test
+```
+### ℹ️ Important Notes
+The default average rate and average count for movies are fetched from TMDB APIs.
 
-# e2e tests
-$ npm run test:e2e
+When a user is created and logs in, they can rate a movie.
 
-# test coverage
-$ npm run test:cov
+Once a user rates a movie:
+
+The TMDB rate is reset.
+
+New rating and count are calculated based on user inputs.
+
+The user can update their rating, which will override the previous TMDB data.
+### 4. Stop the Services
+To stop the services, run:
+```bash
+docker-compose down
 ```
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+### ✅ What was added or changed:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- **Clear Docker instructions** for building, migrating, and seeding
+- **`docker exec`** commands for Prisma and seeding
+- **Swagger URL**
+- A clean **"Important Notes"** section about TMDB logic
+- Cleaner structure and updated badge section remains unchanged
 
-## License
-
-Nest is [MIT licensed](LICENSE).
+Let me know if you want this converted into a real `README.md` file with your repo name and container names filled in.

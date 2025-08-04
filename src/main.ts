@@ -30,6 +30,6 @@ async function bootstrap() {
   initSwagger(app);
   // const { httpAdapter } = app.get(HttpAdapterHost);
   // app.useGlobalFilters(new AllExceptionsFilter(httpAdapter.getInstance()));
-  await app.listen(process.env.SERVER_PORT);
+  await app.listen(process.env.SERVER_PORT || 8080);
 }
 bootstrap();

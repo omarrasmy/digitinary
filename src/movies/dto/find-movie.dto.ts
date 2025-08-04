@@ -99,7 +99,7 @@ export class MovieResponseDto {
         description: 'The genres associated with the movie',
         type: () => [GenreResponseDto],
     })
-    genres: GenreResponseDto[];
+    genres?: GenreResponseDto[];
 
 }
 

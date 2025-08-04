@@ -1,7 +1,9 @@
 import { AutoMap } from "@automapper/classes";
 import { IdentifiableEntitySchema } from "src/database/identifiable-entity.schema";
-import { AfterLoad, BeforeInsert, BeforeUpdate, Column, Entity } from "typeorm";
+import { AfterLoad, BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
 import * as bcrypt from 'bcrypt';
+import { MovieRates } from "src/movies/db/movie-rate.entity";
+import { Movies } from "src/movies/db/movie.entity";
 
 @Entity()
 export class Users extends IdentifiableEntitySchema {
@@ -17,6 +19,13 @@ export class Users extends IdentifiableEntitySchema {
     @AutoMap()
     @Column()
     salt: string;
+    @AutoMap()
+    @OneToMany(() => MovieRates, (movieRate) => movieRate.users)
+    movie_rates: MovieRates[];
+    @AutoMap()
+    @ManyToMany(() => Movies, (movie) => movie.user_wishlist, { onDelete: 'CASCADE' })
+    @JoinTable({ name: 'user_wishlist' })
+    wishlist: Movies[];
 
     @BeforeInsert()
     async hashPassword() {

@@ -11,7 +11,7 @@ export class UpdateUserDto {
         example: 'omar'
     })
     @AutoMap()
-    name: string;
+    name?: string;
     @AutoMap()
     @ApiProperty({
         description: 'The password of the user',
@@ -25,6 +25,6 @@ export class UpdateUserDto {
         minSymbols: 1,
     })
     @IsOptional()
-    password: string;
+    password?: string;
 
 }

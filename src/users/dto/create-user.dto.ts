@@ -1,6 +1,7 @@
 import { AutoMap } from "@automapper/classes";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsStrongPassword } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsStrongPassword } from "class-validator";
+import { IdExists } from "src/helper/decorator/check-sending-keys";
 import { PropertyExists } from "src/helper/decorator/unique-validation";
 import { EntitiesEnum } from "src/helper/enums/entities.enum";
 
@@ -25,7 +26,7 @@ export class CreateUserDto {
     @AutoMap()
     @ApiProperty({
         description: 'The password of the user',
-        example: 'Temp@123',
+        example: 'Omar@1234',
     })
     @IsStrongPassword({
         minLength: 8,
@@ -35,4 +36,10 @@ export class CreateUserDto {
         minSymbols: 1,
     })
     password: string;
+}
+export class CreateUserWishlistDto {
+    @AutoMap()
+    @IsOptional()
+    @IdExists([EntitiesEnum.MOVIES])
+    moviesId: number;
 }

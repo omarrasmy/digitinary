@@ -26,14 +26,15 @@ export const ParamCheck = createParamDecorator(
     }
     for (let i = 0; i < tableName.length; i++) {
       const repository = entities[tableName[i]] as Repository<any>;
-      const paramValue = request.params[parseInt(paramsToCheck[i])];
+      const paramValue = parseInt(request.params[paramsToCheck[i]]);
+
       const entity = await repository.findOne({ where: { id: paramValue } });
       if (!entity) {
         throw new NotFoundException(`Entity Not Found`);
       }
     }
     return paramsToCheck.reduce((params, paramName) => {
-      params[paramName] = request.params[paramName];
+      params[paramName] = isNaN(Number(request.params[paramName])) ? request.params[paramName] : parseInt(request.params[paramName]);
       return params;
     }, {});
   },

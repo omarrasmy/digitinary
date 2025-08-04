@@ -49,6 +49,8 @@ export default class MoviesSeeder implements Seeder {
                             genres: movie.genre_ids.map((genreId: number) => {
                                 return { id: genreId }
                             }),
+                            vote_average: movie.vote_average,
+                            vote_count: movie.vote_count,
                         }),
                     );
 

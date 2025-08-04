@@ -16,7 +16,7 @@ export class UserSchemaFactory implements UserInterfaceSchemaFactory {
         return this.mapper.map(entitySchema, Users, InternalUserDto);
     }
     findAllToDto(data: Users[], dataLength: number, count: number, page: number, take: number): GenericFindAllDomainResponse<UserResponseDto> {
-        let entities = this.mapper.mapArray(data, UserResponseDto, Users);
+        let entities = this.mapper.mapArray(data, Users, UserResponseDto);
         return new GenericFindAllDomainResponse<UserResponseDto>(
             entities,
             page,
