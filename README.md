@@ -48,7 +48,7 @@ This is a NestJS TypeScript-based backend project powered by Docker. It interact
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/digitinary.git
+git clone https://github.com/omarrasmy/digitinary.git
 cd digitinary
 ```
 ### 2. Install Docker
